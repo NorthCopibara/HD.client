@@ -15,7 +15,10 @@ public class HomelessDude : ModuleRules
 			"Engine",
 			"InputCore",
 			"ApparatusRuntime",
-			"ECSCore"
+			"ECSCore",
+			"HTTP",
+			"Json", 
+			"JsonUtilities"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] { });
