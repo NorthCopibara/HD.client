@@ -10,5 +10,4 @@ UCLASS()
 class HOMELESSDUDE_API UHDGameInstance : public UGameInstance
 {
 	GENERATED_BODY()
-	
 };
