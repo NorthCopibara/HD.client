@@ -5,7 +5,7 @@
 #include "Network/Core/HttpService.h"
 #include "Network/dto/UserDTO.h"
 
-class LoginRequest
+class RegistrationRequest
 {
 public:
 	static void Send(FUserDTO RequestData,
@@ -22,6 +22,6 @@ public:
 		                                                0,
 		                                                0);
 
-		HttpService::PostRequest("/auth/login", ContentJsonString, "", Response);
+		HttpService::PostRequest("/auth/registration", ContentJsonString, "", Response);
 	}
 };
