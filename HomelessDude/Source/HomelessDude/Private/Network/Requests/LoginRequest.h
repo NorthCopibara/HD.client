@@ -11,34 +11,19 @@ struct FAuthRequest
 	GENERATED_BODY()
 
 	UPROPERTY()
-	FString Username;
+	FString username;
 
 	UPROPERTY()
-	FString Password;
-};
-
-USTRUCT()
-struct FAuthData
-{
-	GENERATED_BODY()
-
-	UPROPERTY()
-	FString AccessToken;
-
-	UPROPERTY()
-	FString RefreshToken;
-
-	UPROPERTY()
-	FString ExpiredIn;
+	FString password;
 };
 
 USTRUCT()
 struct FAuthResponse
 {
 	GENERATED_BODY()
-
+	
 	UPROPERTY()
-	FAuthData LoginResult;
+	FString accessToken;
 };
 
 class LoginRequest

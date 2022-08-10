@@ -9,13 +9,12 @@
 void ATestLogin::BeginPlay()
 {
 	Super::BeginPlay();
-
 	
 	UE_LOG(LogTemp, Warning, TEXT("Test_request"))
 
 	FAuthRequest AuthRequest;
-	AuthRequest.Username = "Test_1";
-	AuthRequest.Password = "Test_1";
+	AuthRequest.username = "Test_2";
+	AuthRequest.password = "Test_2";
 	LoginRequest::AuthRequest(
 		AuthRequest,
 		[&](FHttpRequestPtr Request,
@@ -28,15 +27,14 @@ void ATestLogin::BeginPlay()
 				return;
 			};
 
-			FAuthData Result;
+			FAuthResponse AuthResponse;
 			const FString JsonString = Response->GetContentAsString();
-			FJsonObjectConverter::JsonObjectStringToUStruct<FAuthData>(JsonString, &Result, 0, 0);
+			FJsonObjectConverter::JsonObjectStringToUStruct<FAuthResponse>(JsonString, &AuthResponse, 0, 0);
 
-			AccessToken = Result.AccessToken;
-			RefreshToken = Result.RefreshToken;
+			AccessToken = AuthResponse.accessToken;
 
-			UE_LOG(LogTemp, Display, TEXT("Test: access tocken = %s"), *AccessToken)
-			UE_LOG(LogTemp, Display, TEXT("Test: refresh tocken = %s"), *RefreshToken)
+			UE_LOG(LogTemp, Warning, TEXT("Test: response = %s"), *JsonString)
+			UE_LOG(LogTemp, Warning, TEXT("Test: access tocken = %s"), *AccessToken)
 		});
 }
 

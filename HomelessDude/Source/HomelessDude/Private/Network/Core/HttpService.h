@@ -20,7 +20,7 @@ public:
 
 		if (!AccessToken.Equals(""))
 		{
-			Request->SetHeader(TEXT("Authorization"), "Bearer_" + AccessToken);
+			Request->SetHeader(TEXT("Authorization"), "Bearer " + AccessToken);
 		}
 		return Request;
 	}

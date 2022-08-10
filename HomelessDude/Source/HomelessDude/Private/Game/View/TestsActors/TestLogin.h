@@ -17,5 +17,4 @@ protected:
 
 private:
 	FString AccessToken = "";
-	FString RefreshToken = "";
 };
