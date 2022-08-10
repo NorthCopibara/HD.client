@@ -9,11 +9,10 @@ class LoginRequest
 {
 public:
 	static void Send(FUserDTO RequestData,
-	                        const TFunction<void(
-		                        FHttpRequestPtr Request,
-		                        FHttpResponsePtr Response,
-		                        bool bWasSuccessful)>
-	                        Response = nullptr)
+	                 const TFunction<void(
+		                 FHttpRequestPtr Request,
+		                 FHttpResponsePtr Response,
+		                 bool bWasSuccessful)> Response)
 	{
 		FString ContentJsonString;
 		FJsonObjectConverter::UStructToJsonObjectString(RequestData.StaticStruct(),

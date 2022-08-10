@@ -12,7 +12,8 @@ public:
 	                        const TFunction<void(
 		                        FHttpRequestPtr Request,
 		                        FHttpResponsePtr Response,
-		                        bool bWasSuccessful)>
+		                        bool bWasSuccessful,
+		                        FString ErrorMsg)>
 	                        Response = nullptr)
 	{
 		FString ContentJsonString;

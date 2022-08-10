@@ -13,12 +13,15 @@ class HOMELESSDUDE_API UHGGameInstance : public UGameInstance
 	GENERATED_BODY()
 
 public:
-	void Login(FString Username, FString Password);
+	void Login(FString Username, FString Password, const TFunction<void(bool bWasSuccessful)> Result);
 	void Logout();
-	void Registration(FString Username, FString Password);
+	void Registration(FString Username, FString Password, const TFunction<void(bool bWasSuccessful)> Result);
 
 	FString GetAuthToken();
 	Player* GetPlayer();
 private:
 	TSharedPtr<Player> AuthPlayer = nullptr;
+
+	//TODO
+	TFunction<void(bool bWasSuccessful)> InternalResult = nullptr;
 };
