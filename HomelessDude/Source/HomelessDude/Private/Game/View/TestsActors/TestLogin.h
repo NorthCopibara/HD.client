@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Network/dto/UserDTO.h"
 #include "TestLogin.generated.h"
 
 UCLASS()
@@ -14,7 +13,10 @@ class HOMELESSDUDE_API ATestLogin : public AActor
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Network")
-	FUserDTO User;
+	FString Username;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Network")
+	FString Password;
 
 	UFUNCTION(BlueprintCallable, Category = "Network")
 	void Login();

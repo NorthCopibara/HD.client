@@ -18,7 +18,7 @@ public:
 		Request->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
 		Request->SetHeader(TEXT("Accepts"), TEXT("application/json"));
 
-		if (!AccessToken.Equals(""))
+		if (AccessToken.IsEmpty())
 		{
 			Request->SetHeader(TEXT("Authorization"), "Bearer " + AccessToken);
 		}
