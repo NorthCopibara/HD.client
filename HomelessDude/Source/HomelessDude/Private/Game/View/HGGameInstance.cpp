@@ -35,12 +35,12 @@ void UHGGameInstance::Login(FString Username, FString Password, const TFunction<
 
 			FTokenDTO TokenDTO;
 			const FString JsonString = Response->GetContentAsString();
-			
+
 			FJsonObjectConverter::JsonObjectStringToUStruct<FTokenDTO>(
 				JsonString, &TokenDTO, 0, 0);
 
 			GetPlayer()->SetAuthToken(TokenDTO.accessToken);
-			
+
 			//TODO: handle exception
 			if (InternalResult) InternalResult(!TokenDTO.accessToken.IsEmpty());
 
@@ -84,7 +84,7 @@ void UHGGameInstance::Registration(FString Username,
 
 			FTokenDTO TokenDTO;
 			const FString JsonString = Response->GetContentAsString();
-			
+
 			FJsonObjectConverter::JsonObjectStringToUStruct<FTokenDTO>(
 				JsonString, &TokenDTO, 0, 0);
 
