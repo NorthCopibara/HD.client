@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameMode.h"
-#include "HGMainMenuGameMode.generated.h"
+#include "HDMainMenuGameMode.generated.h"
 
 UCLASS()
-class AHGMainMenuGameMode : public AGameMode
+class AHDMainMenuGameMode : public AGameMode
 {
 	GENERATED_BODY()
 
 public:
-	AHGMainMenuGameMode();
+	AHDMainMenuGameMode();
 };

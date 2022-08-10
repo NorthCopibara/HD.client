@@ -5,10 +5,10 @@
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
 #include "Network/Models/Player.h"
-#include "HGGameInstance.generated.h"
+#include "HDGameInstance.generated.h"
 
 UCLASS()
-class HOMELESSDUDE_API UHGGameInstance : public UGameInstance
+class HOMELESSDUDE_API UHDGameInstance : public UGameInstance
 {
 	GENERATED_BODY()
 

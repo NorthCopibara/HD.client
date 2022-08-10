@@ -1,13 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "HGGameInstance.h"
+#include "HDGameInstance.h"
 
 #include "Network/dto/TokenDTO.h"
 #include "Network/Requests/LoginRequest.h"
 #include "Network/Requests/RegistrationRequest.h"
 
-void UHGGameInstance::Login(FString Username, FString Password, const TFunction<void(bool bWasSuccessful)> Result)
+void UHDGameInstance::Login(FString Username, FString Password, const TFunction<void(bool bWasSuccessful)> Result)
 {
 	if (AuthPlayer && !AuthPlayer->GetAuthToken().IsEmpty())
 	{
@@ -50,11 +50,11 @@ void UHGGameInstance::Login(FString Username, FString Password, const TFunction<
 }
 
 //TODO
-void UHGGameInstance::Logout()
+void UHDGameInstance::Logout()
 {
 }
 
-void UHGGameInstance::Registration(FString Username,
+void UHDGameInstance::Registration(FString Username,
                                    FString Password,
                                    const TFunction<void(bool bWasSuccessful)> Result)
 {
@@ -97,12 +97,12 @@ void UHGGameInstance::Registration(FString Username,
 		});
 }
 
-FString UHGGameInstance::GetAuthToken()
+FString UHDGameInstance::GetAuthToken()
 {
 	return GetPlayer()->GetAuthToken();
 }
 
-Player* UHGGameInstance::GetPlayer()
+Player* UHDGameInstance::GetPlayer()
 {
 	if (!AuthPlayer)
 	{

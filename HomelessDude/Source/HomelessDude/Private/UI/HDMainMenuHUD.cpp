@@ -1,18 +1,18 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "UI/HGMainMenuHUD.h"
+#include "UI/HDMainMenuHUD.h"
 
 #include "Blueprint/UserWidget.h"
 
-void AHGMainMenuHUD::Show(EMenuViewName viewType)
+void AHDMainMenuHUD::Show(EMenuViewName viewType)
 {
 	const auto OwnerView = GetViewByType(viewType);
 	if (OwnerView)
 	{
 		OwnerView->AddToViewport();
 
-		const auto MenuView = Cast<UHGBaseView>(OwnerView);
+		const auto MenuView = Cast<UHDBaseView>(OwnerView);
 		if(MenuView)
 		{
 			MenuView->Init();
@@ -20,12 +20,12 @@ void AHGMainMenuHUD::Show(EMenuViewName viewType)
 	}
 }
 
-void AHGMainMenuHUD::Hide(EMenuViewName viewType)
+void AHDMainMenuHUD::Hide(EMenuViewName viewType)
 {
 	const auto OwnerView = GetViewByType(viewType);
 	if (OwnerView)
 	{
-		const auto MenuView = Cast<UHGBaseView>(OwnerView);
+		const auto MenuView = Cast<UHDBaseView>(OwnerView);
 		if(MenuView)
 		{
 			MenuView->Revert();
@@ -35,7 +35,7 @@ void AHGMainMenuHUD::Hide(EMenuViewName viewType)
 	}
 }
 
-void AHGMainMenuHUD::SetCursor(bool isVisible)
+void AHDMainMenuHUD::SetCursor(bool isVisible)
 {
 	if (!GetWorld()) return;
 
@@ -46,20 +46,20 @@ void AHGMainMenuHUD::SetCursor(bool isVisible)
 	}
 }
 
-void AHGMainMenuHUD::InitViews()
+void AHDMainMenuHUD::InitViews()
 {
 	if(!GetWorld()) return;
 	
 	for (auto Widget : UserWidgets)
 	{
-		auto Instance = CreateWidget<UHGBaseView>(GetWorld(), Widget.Get());
+		auto Instance = CreateWidget<UHDBaseView>(GetWorld(), Widget.Get());
 		auto Type = Instance->GetViewName();
 
 		ViewInstances.Add(Type, Instance);
 	}
 }
 
-void AHGMainMenuHUD::BeginPlay()
+void AHDMainMenuHUD::BeginPlay()
 {
 	Super::BeginPlay();
 	
@@ -67,7 +67,7 @@ void AHGMainMenuHUD::BeginPlay()
 	Show(EMenuViewName::Main);
 }
 
-UUserWidget* AHGMainMenuHUD::GetViewByType(EMenuViewName ViewType)
+UUserWidget* AHDMainMenuHUD::GetViewByType(EMenuViewName ViewType)
 {
 	const auto BaseWidget = ViewInstances.Find(ViewType);
 	if(!BaseWidget) return nullptr;

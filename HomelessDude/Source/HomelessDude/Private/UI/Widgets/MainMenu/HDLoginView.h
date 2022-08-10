@@ -5,11 +5,11 @@
 #include "CoreMinimal.h"
 #include "Components/Button.h"
 #include "Components/EditableTextBox.h"
-#include "UI/Widgets/HGBaseView.h"
-#include "HGLoginView.generated.h"
+#include "UI/Widgets/HDBaseView.h"
+#include "HDLoginView.generated.h"
 
 UCLASS()
-class UHGLoginView : public UHGBaseView
+class UHDLoginView : public UHDBaseView
 {
 	GENERATED_BODY()
 public:
@@ -23,7 +23,7 @@ public:
 	UEditableTextBox* Text_Password;
 
 public:
-	UHGLoginView();
+	UHDLoginView();
 
 	UFUNCTION()
 	void OnClick_Registration();

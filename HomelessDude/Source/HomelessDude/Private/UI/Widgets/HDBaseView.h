@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "HGBaseView.generated.h"
+#include "HDBaseView.generated.h"
 
 UENUM()
 enum class EMenuViewName
@@ -16,7 +16,7 @@ enum class EMenuViewName
 };
 
 UCLASS()
-class HOMELESSDUDE_API UHGBaseView : public UUserWidget
+class HOMELESSDUDE_API UHDBaseView : public UUserWidget
 {
 	GENERATED_BODY()
 	

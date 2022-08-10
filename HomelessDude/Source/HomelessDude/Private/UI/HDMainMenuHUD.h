@@ -4,21 +4,21 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
-#include "Widgets/HGBaseView.h"
-#include "HGMainMenuHUD.generated.h"
+#include "Widgets/HDBaseView.h"
+#include "HDMainMenuHUD.generated.h"
 
 UCLASS()
-class AHGMainMenuHUD : public AHUD
+class AHDMainMenuHUD : public AHUD
 {
 	GENERATED_BODY()
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
-	TArray<TSubclassOf<UHGBaseView>> UserWidgets;
+	TArray<TSubclassOf<UHDBaseView>> UserWidgets;
 	
 private:
 	UPROPERTY()
-	TMap<EMenuViewName, UHGBaseView*> ViewInstances;
+	TMap<EMenuViewName, UHDBaseView*> ViewInstances;
 
 public:
 	void Hide(EMenuViewName viewType);

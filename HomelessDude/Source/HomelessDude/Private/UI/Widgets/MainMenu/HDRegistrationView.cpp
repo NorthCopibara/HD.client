@@ -1,20 +1,20 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "UI/Widgets/MainMenu/HGRegistrationView.h"
+#include "UI/Widgets/MainMenu/HDRegistrationView.h"
 
-#include "Game/View/HGGameInstance.h"
+#include "Game/View/HDGameInstance.h"
 #include "Kismet/GameplayStatics.h"
 
-UHGRegistrationView::UHGRegistrationView()
+UHDRegistrationView::UHDRegistrationView()
 {
 	ViewName = EMenuViewName::Registration;
 }
 
-void UHGRegistrationView::OnClick_Registration()
+void UHDRegistrationView::OnClick_Registration()
 {
 	RegistrationBut->SetIsEnabled(false);
-	const auto GameInstance = Cast<UHGGameInstance>(GetGameInstance());
+	const auto GameInstance = Cast<UHDGameInstance>(GetGameInstance());
 	if (!GameInstance) return;
 	GameInstance->Registration(
 		Text_Username->GetText().ToString(),
@@ -31,12 +31,12 @@ void UHGRegistrationView::OnClick_Registration()
 		});
 }
 
-void UHGRegistrationView::NativeOnInitialized()
+void UHDRegistrationView::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
 
 	if (RegistrationBut)
 	{
-		RegistrationBut->OnClicked.AddDynamic(this, &UHGRegistrationView::OnClick_Registration);
+		RegistrationBut->OnClicked.AddDynamic(this, &UHDRegistrationView::OnClick_Registration);
 	}
 }

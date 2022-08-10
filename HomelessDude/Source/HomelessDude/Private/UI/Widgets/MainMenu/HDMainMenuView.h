@@ -4,11 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Components/Button.h"
-#include "UI/Widgets/HGBaseView.h"
-#include "HGMainMenuView.generated.h"
+#include "UI/Widgets/HDBaseView.h"
+#include "HDMainMenuView.generated.h"
 
 UCLASS()
-class UHGMainMenuView : public UHGBaseView
+class UHDMainMenuView : public UHDBaseView
 {
 	GENERATED_BODY()
 public:
@@ -19,7 +19,7 @@ public:
 	UButton* RegistrationBut;
 
 public:
-	UHGMainMenuView();
+	UHDMainMenuView();
 
 	UFUNCTION()
 	void OnClick_MoveToLogin();

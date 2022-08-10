@@ -1,20 +1,20 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "UI/Widgets/MainMenu/HGLoginView.h"
+#include "UI/Widgets/MainMenu/HDLoginView.h"
 
-#include "Game/View/HGGameInstance.h"
+#include "Game/View/HDGameInstance.h"
 #include "Kismet/GameplayStatics.h"
 
-UHGLoginView::UHGLoginView()
+UHDLoginView::UHDLoginView()
 {
 	ViewName = EMenuViewName::Login;
 }
 
-void UHGLoginView::OnClick_Registration()
+void UHDLoginView::OnClick_Registration()
 {
 	LoginBut->SetIsEnabled(false);
-	const auto GameInstance = Cast<UHGGameInstance>(GetGameInstance());
+	const auto GameInstance = Cast<UHDGameInstance>(GetGameInstance());
 	if (!GameInstance) return;
 	GameInstance->Login(
 		Text_Username->GetText().ToString(),
@@ -33,12 +33,12 @@ void UHGLoginView::OnClick_Registration()
 		});
 }
 
-void UHGLoginView::NativeOnInitialized()
+void UHDLoginView::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
 
 	if (LoginBut)
 	{
-		LoginBut->OnClicked.AddDynamic(this, &UHGLoginView::OnClick_Registration);
+		LoginBut->OnClicked.AddDynamic(this, &UHDLoginView::OnClick_Registration);
 	}
 }
