@@ -8,7 +8,12 @@ public class HomelessDude : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-		PublicDependencyModuleNames.AddRange(new string[]
+		PublicIncludePaths.AddRange(new string[]
+		{
+			"HomelessDude/Private"
+		});
+		
+		PrivateDependencyModuleNames.AddRange(new string[]
 		{
 			"Core",
 			"CoreUObject",
@@ -17,10 +22,9 @@ public class HomelessDude : ModuleRules
 			"ApparatusRuntime",
 			"ECSCore",
 			"HTTP",
-			"Json", 
-			"JsonUtilities"
+			"Json",
+			"JsonUtilities",
+			"ALSV4_CPP"
 		});
-
-		PrivateDependencyModuleNames.AddRange(new string[] { });
 	}
 }
