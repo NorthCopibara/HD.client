@@ -49,8 +49,6 @@ void UHDCustomizationComponent::ChangeMeshVisibility(FName MeshName, bool IsVisi
 {
 	const auto Owner = GetOwner();
 	const auto MeshComponent = Cast<USkeletalMeshComponent>(Owner->GetDefaultSubobjectByName(MeshName));
-	UE_LOG(LogTemp, Warning, TEXT("Test_1"))
 	if (!MeshComponent) return;
-	UE_LOG(LogTemp, Warning, TEXT("Test_2"))
 	MeshComponent->SetVisibility(IsVisible);
 }

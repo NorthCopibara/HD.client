@@ -53,7 +53,6 @@ void UHDCreateCharacterView::NativeOnInitialized()
 
 void UHDCreateCharacterView::OnClick_Legs_1()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Test: Legs_1"))
 	Legs_2->SetIsEnabled(true);
 	Legs_1->SetIsEnabled(false);
 
@@ -64,7 +63,6 @@ void UHDCreateCharacterView::OnClick_Legs_1()
 
 void UHDCreateCharacterView::OnClick_Legs_2()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Test: Legs_2"))
 	Legs_2->SetIsEnabled(false);
 	Legs_1->SetIsEnabled(true);
 
@@ -164,9 +162,6 @@ void UHDCreateCharacterView::UpdateCharacter()
 	TArray<FCustomizationConfig> Configs;
 	for (auto Config : CustomizationConfigs)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Test: configuration: %i"),
-			Config.Value.ActiveElement)
-		
 		Configs.Add(Config.Value);
 	}
 	
