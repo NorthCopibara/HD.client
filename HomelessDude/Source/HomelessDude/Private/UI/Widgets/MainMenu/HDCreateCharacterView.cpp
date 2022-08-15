@@ -49,6 +49,8 @@ void UHDCreateCharacterView::NativeOnInitialized()
 	Hair_1->SetIsEnabled(false);
 	if (Hair_2) Hair_2->OnClicked.AddDynamic(this, &UHDCreateCharacterView::OnClick_Hair_2);
 	if (Hair_3) Hair_3->OnClicked.AddDynamic(this, &UHDCreateCharacterView::OnClick_Hair_3);
+
+	if (Create) Create->OnClicked.AddDynamic(this, &UHDCreateCharacterView::OnClick_Create);
 }
 
 void UHDCreateCharacterView::OnClick_Legs_1()
@@ -155,6 +157,16 @@ void UHDCreateCharacterView::OnClick_Hair_3()
 	CustomizationConfigs[ECustomizationElement::Hair].ActiveElement = 2;
 
 	UpdateCharacter();
+}
+
+void UHDCreateCharacterView::OnClick_Create()
+{
+	Create->SetIsEnabled(false);
+	//Check valid username
+	//Handle result
+	//If true -> game
+	//Else Create->SetIsEnabled(true);
+	UGameplayStatics::OpenLevel(this, "GameplayMap");
 }
 
 void UHDCreateCharacterView::UpdateCharacter()

@@ -37,7 +37,6 @@ void UHDLoginView::OnClick_Login()
 
 			Hud->Hide(EMenuViewName::Login);
 			Hud->Show(EMenuViewName::CreateCharacter);
-			//UGameplayStatics::OpenLevel(this, "GameplayMap");
 		});
 }
 

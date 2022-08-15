@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/Button.h"
-#include "Game/View/Characters/HDBaseCharacter.h"
+#include "Components/EditableTextBox.h"
 #include "Game/View/Characters/HDCustomizationActor.h"
 #include "UI/Widgets/HDBaseView.h"
 #include "HDCreateCharacterView.generated.h"
@@ -46,6 +46,12 @@ public:
 
 	UPROPERTY(meta = (BindWidget))
 	UButton* Hair_3;
+
+	UPROPERTY(meta = (BindWidget))
+	UEditableTextBox* CharName;
+
+	UPROPERTY(meta = (BindWidget))
+	UButton* Create;
 
 	
 protected:
@@ -97,6 +103,9 @@ private:
 
 	UFUNCTION()
 	void OnClick_Hair_3();
+
+	UFUNCTION()
+	void OnClick_Create();
 
 	void UpdateCharacter();
 };
