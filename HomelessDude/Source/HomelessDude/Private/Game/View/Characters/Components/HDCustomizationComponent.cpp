@@ -47,7 +47,10 @@ void UHDCustomizationComponent::UpdateMeshes(TArray<FCustomizationConfig> Config
 
 void UHDCustomizationComponent::ChangeMeshVisibility(FName MeshName, bool IsVisible)
 {
-	const auto MeshComponent = Cast<USkeletalMeshComponent>(GetDefaultSubobjectByName(MeshName));
+	const auto Owner = GetOwner();
+	const auto MeshComponent = Cast<USkeletalMeshComponent>(Owner->GetDefaultSubobjectByName(MeshName));
+	UE_LOG(LogTemp, Warning, TEXT("Test_1"))
 	if (!MeshComponent) return;
+	UE_LOG(LogTemp, Warning, TEXT("Test_2"))
 	MeshComponent->SetVisibility(IsVisible);
 }

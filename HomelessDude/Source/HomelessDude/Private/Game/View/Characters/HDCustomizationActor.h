@@ -4,11 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Components/HDCustomizationComponent.h"
-#include "GameFramework/Actor.h"
 #include "HDCustomizationActor.generated.h"
 
 UCLASS()
-class HOMELESSDUDE_API AHDCustomizationActor : public AActor
+class HOMELESSDUDE_API AHDCustomizationActor : public APawn
 {
 	GENERATED_BODY()
 

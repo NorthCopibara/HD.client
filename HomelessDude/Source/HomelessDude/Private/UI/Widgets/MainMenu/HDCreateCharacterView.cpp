@@ -4,6 +4,7 @@
 #include "HDCreateCharacterView.h"
 
 #include "Game/View/Characters/HDCustomizationActor.h"
+#include "Kismet/GameplayStatics.h"
 
 //TODO: REFACTOR THIS G
 
@@ -23,9 +24,11 @@ void UHDCreateCharacterView::NativeOnInitialized()
 	CustomizationConfigs.Add(ECustomizationElement::Head, FCustomizationConfig{ECustomizationElement::Head});
 	CustomizationConfigs.Add(ECustomizationElement::Legs, FCustomizationConfig{ECustomizationElement::Legs});
 
-	CustomizationActor = GetWorld()->SpawnActor<AHDCustomizationActor>(CustomizationActorPref,
-	                                                                   SpawnPoint,
-	                                                                   FRotator{});
+	const auto CustomizationActor = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+	check(CustomizationActor)
+	CustomizationComponent
+		= Cast<UHDCustomizationComponent>(CustomizationActor->GetDefaultSubobjectByName("CustomizationComponent"));
+	check(CustomizationComponent)
 
 	UpdateCharacter();
 
@@ -50,8 +53,9 @@ void UHDCreateCharacterView::NativeOnInitialized()
 
 void UHDCreateCharacterView::OnClick_Legs_1()
 {
-	Legs_2->SetIsEnabled(false);
-	Legs_1->SetIsEnabled(true);
+	UE_LOG(LogTemp, Warning, TEXT("Test: Legs_1"))
+	Legs_2->SetIsEnabled(true);
+	Legs_1->SetIsEnabled(false);
 
 	CustomizationConfigs[ECustomizationElement::Legs].ActiveElement = 0;
 
@@ -60,8 +64,9 @@ void UHDCreateCharacterView::OnClick_Legs_1()
 
 void UHDCreateCharacterView::OnClick_Legs_2()
 {
-	Legs_2->SetIsEnabled(true);
-	Legs_1->SetIsEnabled(false);
+	UE_LOG(LogTemp, Warning, TEXT("Test: Legs_2"))
+	Legs_2->SetIsEnabled(false);
+	Legs_1->SetIsEnabled(true);
 
 	CustomizationConfigs[ECustomizationElement::Legs].ActiveElement = 1;
 
@@ -70,9 +75,9 @@ void UHDCreateCharacterView::OnClick_Legs_2()
 
 void UHDCreateCharacterView::OnClick_Body_1()
 {
-	Body_1->SetIsEnabled(true);
-	Body_2->SetIsEnabled(false);
-	Body_3->SetIsEnabled(false);
+	Body_1->SetIsEnabled(false);
+	Body_2->SetIsEnabled(true);
+	Body_3->SetIsEnabled(true);
 
 	CustomizationConfigs[ECustomizationElement::Body].ActiveElement = 0;
 
@@ -81,9 +86,9 @@ void UHDCreateCharacterView::OnClick_Body_1()
 
 void UHDCreateCharacterView::OnClick_Body_2()
 {
-	Body_1->SetIsEnabled(false);
-	Body_2->SetIsEnabled(true);
-	Body_3->SetIsEnabled(false);
+	Body_1->SetIsEnabled(true);
+	Body_2->SetIsEnabled(false);
+	Body_3->SetIsEnabled(true);
 
 	CustomizationConfigs[ECustomizationElement::Body].ActiveElement = 1;
 
@@ -92,9 +97,9 @@ void UHDCreateCharacterView::OnClick_Body_2()
 
 void UHDCreateCharacterView::OnClick_Body_3()
 {
-	Body_1->SetIsEnabled(false);
-	Body_2->SetIsEnabled(false);
-	Body_3->SetIsEnabled(true);
+	Body_1->SetIsEnabled(true);
+	Body_2->SetIsEnabled(true);
+	Body_3->SetIsEnabled(false);
 
 	CustomizationConfigs[ECustomizationElement::Body].ActiveElement = 2;
 
@@ -103,8 +108,8 @@ void UHDCreateCharacterView::OnClick_Body_3()
 
 void UHDCreateCharacterView::OnClick_Beard_1()
 {
-	Beard_1->SetIsEnabled(true);
-	Beard_2->SetIsEnabled(false);
+	Beard_1->SetIsEnabled(false);
+	Beard_2->SetIsEnabled(true);
 
 	CustomizationConfigs[ECustomizationElement::Beard].ActiveElement = 0;
 
@@ -113,19 +118,19 @@ void UHDCreateCharacterView::OnClick_Beard_1()
 
 void UHDCreateCharacterView::OnClick_Beard_2()
 {
-	Beard_1->SetIsEnabled(false);
-	Beard_2->SetIsEnabled(true);
+	Beard_1->SetIsEnabled(true);
+	Beard_2->SetIsEnabled(false);
 
-	CustomizationConfigs[ECustomizationElement::Body].ActiveElement = 1;
+	CustomizationConfigs[ECustomizationElement::Beard].ActiveElement = 1;
 
 	UpdateCharacter();
 }
 
 void UHDCreateCharacterView::OnClick_Hair_1()
 {
-	Hair_1->SetIsEnabled(true);
-	Hair_2->SetIsEnabled(false);
-	Hair_3->SetIsEnabled(false);
+	Hair_1->SetIsEnabled(false);
+	Hair_2->SetIsEnabled(true);
+	Hair_3->SetIsEnabled(true);
 
 	CustomizationConfigs[ECustomizationElement::Hair].ActiveElement = 0;
 
@@ -134,22 +139,22 @@ void UHDCreateCharacterView::OnClick_Hair_1()
 
 void UHDCreateCharacterView::OnClick_Hair_2()
 {
-	Hair_1->SetIsEnabled(false);
-	Hair_2->SetIsEnabled(true);
-	Hair_3->SetIsEnabled(false);
+	Hair_1->SetIsEnabled(true);
+	Hair_2->SetIsEnabled(false);
+	Hair_3->SetIsEnabled(true);
 
-	CustomizationConfigs[ECustomizationElement::Body].ActiveElement = 1;
+	CustomizationConfigs[ECustomizationElement::Hair].ActiveElement = 1;
 
 	UpdateCharacter();
 }
 
 void UHDCreateCharacterView::OnClick_Hair_3()
 {
-	Hair_1->SetIsEnabled(false);
-	Hair_2->SetIsEnabled(false);
-	Hair_3->SetIsEnabled(true);
+	Hair_1->SetIsEnabled(true);
+	Hair_2->SetIsEnabled(true);
+	Hair_3->SetIsEnabled(false);
 
-	CustomizationConfigs[ECustomizationElement::Body].ActiveElement = 2;
+	CustomizationConfigs[ECustomizationElement::Hair].ActiveElement = 2;
 
 	UpdateCharacter();
 }
@@ -159,10 +164,11 @@ void UHDCreateCharacterView::UpdateCharacter()
 	TArray<FCustomizationConfig> Configs;
 	for (auto Config : CustomizationConfigs)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("Test: configuration: %i"),
+			Config.Value.ActiveElement)
+		
 		Configs.Add(Config.Value);
 	}
-	const auto CustomizationComponent
-		= Cast<UHDCustomizationComponent>(CustomizationActor->GetDefaultSubobjectByName("CustomizationComponent"));
-	if (!CustomizationComponent) return;
+	
 	CustomizationComponent->UpdateMeshes(Configs);
 }

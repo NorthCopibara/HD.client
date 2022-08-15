@@ -59,7 +59,7 @@ private:
 	TMap<ECustomizationElement, FCustomizationConfig> CustomizationConfigs;
 
 	UPROPERTY()
-	AActor* CustomizationActor = nullptr;
+	UHDCustomizationComponent* CustomizationComponent = nullptr;
 
 public:
 	UHDCreateCharacterView();

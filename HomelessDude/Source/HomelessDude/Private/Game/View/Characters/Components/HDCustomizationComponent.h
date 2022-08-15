@@ -9,12 +9,12 @@
 UENUM(BlueprintType)
 enum class ECustomizationElement : uint8
 {
-	Hair,
-	Head,
-	Beard,
-	Body,
-	Hands,
-	Legs
+	Hair = 0,
+	Head = 1,
+	Beard = 2,
+	Body = 4,
+	Hands = 8,
+	Legs = 16
 };
 
 USTRUCT(BlueprintType)
