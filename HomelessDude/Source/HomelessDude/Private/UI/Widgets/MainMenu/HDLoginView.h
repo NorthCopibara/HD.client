@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/Button.h"
 #include "Components/EditableTextBox.h"
+#include "Game/View/HDGameInstance.h"
 #include "UI/Widgets/HDBaseView.h"
 #include "HDLoginView.generated.h"
 
@@ -26,8 +27,13 @@ public:
 	UHDLoginView();
 
 	UFUNCTION()
-	void OnClick_Registration();
+	void OnClick_Login();
 
 protected:
 	virtual void NativeOnInitialized() override;
+
+	//TODO: fix this
+private:
+	UPROPERTY()
+	UHDGameInstance* GameInstance = nullptr;
 };

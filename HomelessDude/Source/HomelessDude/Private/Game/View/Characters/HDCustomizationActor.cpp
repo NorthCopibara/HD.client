@@ -1,11 +1,13 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "HDBaseCharacter.h"
+#include "HDCustomizationActor.h"
 
 
-AHDBaseCharacter::AHDBaseCharacter(const FObjectInitializer& ObjectInitializer)
-	: Super(ObjectInitializer)
+AHDCustomizationActor::AHDCustomizationActor()
 {
+	PrimaryActorTick.bCanEverTick = false;
+
 	CustomizationComponent = CreateDefaultSubobject<UHDCustomizationComponent>("CustomizationComponent");
 }
+

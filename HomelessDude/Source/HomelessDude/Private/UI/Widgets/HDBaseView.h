@@ -12,7 +12,9 @@ enum class EMenuViewName
 	Default,
 	Main,
 	Login,
-	Registration
+	Registration,
+	CreateCharacter,
+	SelectCharacter
 };
 
 UCLASS()

@@ -7,7 +7,7 @@ public class HomelessDude : ModuleRules
 	public HomelessDude(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-
+		CppStandard = CppStandardVersion.Cpp17;
 		PublicIncludePaths.AddRange(new string[]
 		{
 			"HomelessDude/Private"

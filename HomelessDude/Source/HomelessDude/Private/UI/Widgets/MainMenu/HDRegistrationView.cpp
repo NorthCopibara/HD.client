@@ -5,6 +5,7 @@
 
 #include "Game/View/HDGameInstance.h"
 #include "Kismet/GameplayStatics.h"
+#include "UI/HDMainMenuHUD.h"
 
 UHDRegistrationView::UHDRegistrationView()
 {
@@ -27,7 +28,14 @@ void UHDRegistrationView::OnClick_Registration()
 				return;
 			}
 			//TODO: transits
-			UGameplayStatics::OpenLevel(this, "GameplayMap");
+			//UGameplayStatics::OpenLevel(this, "GameplayMap");
+
+			//TODO: create transitions
+			const auto Hud = Cast<AHDMainMenuHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
+			if (!Hud) return;
+
+			Hud->Hide(EMenuViewName::Registration);
+			Hud->Show(EMenuViewName::CreateCharacter);
 		});
 }
 

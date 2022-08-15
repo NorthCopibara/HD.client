@@ -5,16 +5,17 @@
 
 #include "Game/View/HDGameInstance.h"
 #include "Kismet/GameplayStatics.h"
+#include "UI/HDMainMenuHUD.h"
 
 UHDLoginView::UHDLoginView()
 {
 	ViewName = EMenuViewName::Login;
 }
 
-void UHDLoginView::OnClick_Registration()
+void UHDLoginView::OnClick_Login()
 {
 	LoginBut->SetIsEnabled(false);
-	const auto GameInstance = Cast<UHDGameInstance>(GetGameInstance());
+	
 	if (!GameInstance) return;
 	GameInstance->Login(
 		Text_Username->GetText().ToString(),
@@ -27,9 +28,16 @@ void UHDLoginView::OnClick_Registration()
 				return;
 			}
 			//TODO: transits
-			
+
 			UE_LOG(LogTemp, Warning, TEXT("Login"))
-			UGameplayStatics::OpenLevel(this, "GameplayMap");
+
+			//TODO: create transitions
+			const auto Hud = Cast<AHDMainMenuHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
+			if (!Hud) return;
+
+			Hud->Hide(EMenuViewName::Login);
+			Hud->Show(EMenuViewName::CreateCharacter);
+			//UGameplayStatics::OpenLevel(this, "GameplayMap");
 		});
 }
 
@@ -39,6 +47,12 @@ void UHDLoginView::NativeOnInitialized()
 
 	if (LoginBut)
 	{
-		LoginBut->OnClicked.AddDynamic(this, &UHDLoginView::OnClick_Registration);
+		LoginBut->OnClicked.AddDynamic(this, &UHDLoginView::OnClick_Login);
+	}
+
+	GameInstance = Cast<UHDGameInstance>(GetGameInstance());
+	if(!GameInstance)
+	{
+		UE_LOG(LogTemp, Error, TEXT("HD Game instance not found!"))
 	}
 }

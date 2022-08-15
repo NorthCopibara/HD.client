@@ -19,7 +19,6 @@ void UHDGameInstance::Login(FString Username, FString Password, const TFunction<
 	InternalResult = Result;
 
 	const FUserDTO User(Username, Password);
-
 	LoginRequest::Send(
 		User,
 		[&](FHttpRequestPtr Request,

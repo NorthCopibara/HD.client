@@ -3,18 +3,18 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Character/ALSCharacter.h"
 #include "Components/HDCustomizationComponent.h"
-#include "HDBaseCharacter.generated.h"
+#include "GameFramework/Actor.h"
+#include "HDCustomizationActor.generated.h"
 
 UCLASS()
-class HOMELESSDUDE_API AHDBaseCharacter : public AALSCharacter
+class HOMELESSDUDE_API AHDCustomizationActor : public AActor
 {
 	GENERATED_BODY()
 
 public:
-	AHDBaseCharacter(const FObjectInitializer& ObjectInitializer);
-
+	AHDCustomizationActor();
+	
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Components")
 	UHDCustomizationComponent* CustomizationComponent = nullptr;
