@@ -47,9 +47,6 @@ struct FCustomizationMeshes
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Customization")
 	TArray<FString> MeshComponentsNames;
-
-	UPROPERTY(VisibleDefaultsOnly, Category = "Customization")
-	TArray<USkeletalMeshComponent*> Meshes;
 };
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))

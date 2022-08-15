@@ -14,8 +14,6 @@ void UHDCustomizationComponent::UpdateMeshes(TArray<FCustomizationConfig> Config
 {
 	for (auto CustomizationElement : CustomizationElements)
 	{
-		CustomizationElement.Value.Meshes.Empty();
-
 		for (auto MeshName : CustomizationElement.Value.MeshComponentsNames)
 		{
 			ChangeMeshVisibility(*MeshName, false);
