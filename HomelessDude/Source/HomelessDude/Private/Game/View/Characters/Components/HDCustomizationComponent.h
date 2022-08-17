@@ -56,9 +56,10 @@ class HOMELESSDUDE_API UHDCustomizationComponent : public UActorComponent
 
 public:
 	UHDCustomizationComponent();
+	
+	void Init();
 
-
-	void UpdateMeshes(TArray<FCustomizationConfig> Configs);
+	void RefreshMeshes(TArray<FCustomizationConfig> Configs);
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Customization")
@@ -69,8 +70,9 @@ protected:
 	TArray<FCustomizationConfig> TestConfig;
 
 	UFUNCTION(BlueprintCallable, Category = "Tests")
-	void TestUpdate() { UpdateMeshes(TestConfig); }
+	void TestUpdate() { RefreshMeshes(TestConfig); }
 
 private:
 	void ChangeMeshVisibility(FName MeshName, bool IsVisible);
+	void HideAllMeshes();
 };

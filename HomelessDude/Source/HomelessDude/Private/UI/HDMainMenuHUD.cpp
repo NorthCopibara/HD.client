@@ -20,6 +20,20 @@ void AHDMainMenuHUD::Show(EMenuViewName viewType)
 	}
 }
 
+void AHDMainMenuHUD::Revert(EMenuViewName viewType)
+{
+	const auto OwnerView = GetViewByType(viewType);
+	if (OwnerView)
+	{
+		const auto MenuView = Cast<UHDBaseView>(OwnerView);
+		if(MenuView)
+		{
+			MenuView->Revert();
+		}
+	}
+	
+}
+
 void AHDMainMenuHUD::Hide(EMenuViewName viewType)
 {
 	const auto OwnerView = GetViewByType(viewType);

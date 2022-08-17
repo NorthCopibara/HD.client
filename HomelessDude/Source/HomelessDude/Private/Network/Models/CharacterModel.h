@@ -1,8 +1,7 @@
 ﻿#pragma once
+#include "Game/View/Characters/Components/HDCustomizationComponent.h"
 
 #include "CharacterModel.generated.h"
-
-struct FCustomizationConfig;
 
 USTRUCT(BlueprintType)
 struct FCharacterModel
@@ -24,4 +23,6 @@ struct FCharacterModel
 		  IsSelected(bIsSelected)
 	{
 	}
+
+	FCharacterModel() = default;
 };

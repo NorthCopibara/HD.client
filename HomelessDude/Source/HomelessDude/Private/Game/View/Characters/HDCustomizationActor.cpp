@@ -11,3 +11,10 @@ AHDCustomizationActor::AHDCustomizationActor()
 	CustomizationComponent = CreateDefaultSubobject<UHDCustomizationComponent>("CustomizationComponent");
 }
 
+void AHDCustomizationActor::BeginPlay()
+{
+	Super::BeginPlay();
+
+	CustomizationComponent->Init();
+}
+

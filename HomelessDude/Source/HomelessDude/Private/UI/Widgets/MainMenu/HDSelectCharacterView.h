@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/Button.h"
 #include "Components/TextBlock.h"
+#include "Game/View/GameModes/HDMainMenuGameMode.h"
 #include "UI/Widgets/HDBaseView.h"
 #include "HDSelectCharacterView.generated.h"
 
@@ -29,11 +30,17 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 	UButton* PreviousChar;
 
+private:
+	UPROPERTY()
+	AHDMainMenuGameMode* GameMode = nullptr;
+
 public:
 	UHDSelectCharacterView();
 	
 protected:
 	virtual void NativeOnInitialized() override;
+
+	virtual void Revert() override;
 
 private:
 	UFUNCTION()
@@ -47,4 +54,6 @@ private:
 
 	UFUNCTION()
 	void OnClick_PreviousChar();
+
+	void SetCharacterName();
 };

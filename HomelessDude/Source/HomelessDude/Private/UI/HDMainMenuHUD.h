@@ -23,6 +23,7 @@ private:
 public:
 	void Hide(EMenuViewName viewType);
 	void Show(EMenuViewName viewType);
+	void Revert(EMenuViewName viewType);
 	void SetCursor(bool isVisible);
 
 	void InitViews();

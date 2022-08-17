@@ -13,6 +13,9 @@ class HOMELESSDUDE_API AHDCustomizationActor : public APawn
 
 public:
 	AHDCustomizationActor();
+
+protected:
+	virtual void BeginPlay() override;
 	
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Components")

@@ -40,11 +40,11 @@ void UHDGameInstance::Login(FString Username, FString Password, const TFunction<
 
 			GetPlayer()->SetAuthToken(TokenDTO.accessToken);
 
-			//TODO: handle exception
-			if (InternalResult) InternalResult(!TokenDTO.accessToken.IsEmpty());
-
 			UE_LOG(LogTemp, Warning, TEXT("Test: response = %s"), *JsonString)
 			UE_LOG(LogTemp, Warning, TEXT("Test: access tocken = %s"), *TokenDTO.accessToken)
+			
+			//TODO: handle exception
+			if (InternalResult) InternalResult(!TokenDTO.accessToken.IsEmpty());
 		});
 }
 

@@ -4,6 +4,7 @@
 #include "UI/Widgets/MainMenu/HDLoginView.h"
 
 #include "Game/View/HDGameInstance.h"
+#include "Game/View/GameModes/HDMainMenuGameMode.h"
 #include "Kismet/GameplayStatics.h"
 #include "UI/HDMainMenuHUD.h"
 
@@ -27,16 +28,16 @@ void UHDLoginView::OnClick_Login()
 				LoginBut->SetIsEnabled(true);
 				return;
 			}
-			//TODO: transits
-
+			
 			UE_LOG(LogTemp, Warning, TEXT("Login"))
-
-			//TODO: create transitions
-			const auto Hud = Cast<AHDMainMenuHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
-			if (!Hud) return;
-
-			Hud->Hide(EMenuViewName::Login);
-			Hud->Show(EMenuViewName::CreateCharacter);
+			
+			const auto GameMode = Cast<AHDMainMenuGameMode>(UGameplayStatics::GetGameMode(this));
+			if(!GameMode)
+			{
+				UE_LOG(LogTemp, Error, TEXT("Game mode not found"))
+				return;
+			}
+			GameMode->LoadPlayerCharacters();
 		});
 }
 

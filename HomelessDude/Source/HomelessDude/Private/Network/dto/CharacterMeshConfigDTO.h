@@ -13,9 +13,9 @@ struct FCharacterMeshConfigDTO
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Network")
 	int32 activeElement;
 
-	FCharacterMeshConfigDTO(const FString& CustomElement, int32 ActiveElement)
-		: customElement(CustomElement),
-		  activeElement(ActiveElement)
+	FCharacterMeshConfigDTO(const FString& customElement, int32 activeElement)
+		: customElement(customElement),
+		  activeElement(activeElement)
 	{
 	}
 

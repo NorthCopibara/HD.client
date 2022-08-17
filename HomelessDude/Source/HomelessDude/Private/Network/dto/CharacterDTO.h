@@ -12,16 +12,16 @@ struct FCharacterDTO
 	FString name;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Network")
-	bool isSelected;
+	bool selected;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Network")
-	TArray<FCharacterMeshConfigDTO> CharacterMeshConfigsDTO;
+	TArray<FCharacterMeshConfigDTO> characterMeshConfigs;
 
 	FCharacterDTO(const FString& Name, bool bIsSelected,
-	              const TArray<FCharacterMeshConfigDTO>& CharacterMeshConfigsDto)
+	              const TArray<FCharacterMeshConfigDTO>& characterMeshConfigsDto)
 		: name(Name),
-		  isSelected(bIsSelected),
-		  CharacterMeshConfigsDTO(CharacterMeshConfigsDto)
+		  selected(bIsSelected),
+		  characterMeshConfigs(characterMeshConfigsDto)
 	{
 	}
 

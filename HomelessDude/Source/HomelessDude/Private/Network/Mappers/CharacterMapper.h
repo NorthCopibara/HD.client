@@ -25,11 +25,11 @@ public:
 	{
 		TArray<FCustomizationConfig> CharacterMeshConfigs;
 
-		for (const auto MeshConfig : CharacterDTO.CharacterMeshConfigsDTO)
+		for (const auto MeshConfig : CharacterDTO.characterMeshConfigs)
 		{
 			CharacterMeshConfigs.Add(CharacterMeshConfigMapper::MapToCharacterMeshConfig(MeshConfig));
 		}
 
-		return FCharacterModel(CharacterDTO.name, CharacterMeshConfigs, CharacterDTO.isSelected);
+		return FCharacterModel(CharacterDTO.name, CharacterMeshConfigs, CharacterDTO.selected);
 	}
 };

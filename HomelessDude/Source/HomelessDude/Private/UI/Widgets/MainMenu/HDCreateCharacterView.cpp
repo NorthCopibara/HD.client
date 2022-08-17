@@ -177,5 +177,5 @@ void UHDCreateCharacterView::UpdateCharacter()
 		Configs.Add(Config.Value);
 	}
 	
-	CustomizationComponent->UpdateMeshes(Configs);
+	CustomizationComponent->RefreshMeshes(Configs);
 }
