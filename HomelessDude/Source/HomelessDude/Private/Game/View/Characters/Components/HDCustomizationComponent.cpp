@@ -3,6 +3,8 @@
 
 #include "HDCustomizationComponent.h"
 
+#include "BaseTypes/CustomizationElements.h"
+
 
 UHDCustomizationComponent::UHDCustomizationComponent()
 {
@@ -42,8 +44,16 @@ void UHDCustomizationComponent::RefreshMeshes(TArray<FCustomizationConfig> Confi
 	}
 	
 	//TODO:
-	ChangeMeshVisibility(*CustomizationElements[ECustomizationElement::Hands].MeshComponentsNames[0], true);
-	ChangeMeshVisibility(*CustomizationElements[ECustomizationElement::Head].MeshComponentsNames[0], true);
+	
+	ChangeMeshVisibility(*CustomizationElements[ECustomizationElement::HD_Hands].MeshComponentsNames[0], true);
+	ChangeMeshVisibility(*CustomizationElements[ECustomizationElement::HD_Head].MeshComponentsNames[0], true);
+
+	CurrentConfigs = Configs;
+}
+
+TArray<FCustomizationConfig> UHDCustomizationComponent::GetCurrentMeshConfigs()
+{
+	return CurrentConfigs;
 }
 
 void UHDCustomizationComponent::ChangeMeshVisibility(FName MeshName, bool IsVisible)

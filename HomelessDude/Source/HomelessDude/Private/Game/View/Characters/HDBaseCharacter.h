@@ -15,6 +15,8 @@ class HOMELESSDUDE_API AHDBaseCharacter : public AALSCharacter
 public:
 	AHDBaseCharacter(const FObjectInitializer& ObjectInitializer);
 
+	virtual void BeginPlay() override;
+	
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Components")
 	UHDCustomizationComponent* CustomizationComponent = nullptr;

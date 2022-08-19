@@ -4,6 +4,7 @@
 #include "HDCreateCharacterView.h"
 
 #include "Game/View/Characters/HDCustomizationActor.h"
+#include "Game/View/GameModes/HDMainMenuGameMode.h"
 #include "Kismet/GameplayStatics.h"
 
 //TODO: REFACTOR THIS G
@@ -17,18 +18,12 @@ void UHDCreateCharacterView::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
 
-	CustomizationConfigs.Add(ECustomizationElement::Beard, FCustomizationConfig{ECustomizationElement::Beard});
-	CustomizationConfigs.Add(ECustomizationElement::Body, FCustomizationConfig{ECustomizationElement::Body});
-	CustomizationConfigs.Add(ECustomizationElement::Hair, FCustomizationConfig{ECustomizationElement::Hair});
-	CustomizationConfigs.Add(ECustomizationElement::Hands, FCustomizationConfig{ECustomizationElement::Hands});
-	CustomizationConfigs.Add(ECustomizationElement::Head, FCustomizationConfig{ECustomizationElement::Head});
-	CustomizationConfigs.Add(ECustomizationElement::Legs, FCustomizationConfig{ECustomizationElement::Legs});
-
-	const auto CustomizationActor = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-	check(CustomizationActor)
-	CustomizationComponent
-		= Cast<UHDCustomizationComponent>(CustomizationActor->GetDefaultSubobjectByName("CustomizationComponent"));
-	check(CustomizationComponent)
+	CustomizationConfigs.Add(ECustomizationElement::HD_Beard, FCustomizationConfig{ECustomizationElement::HD_Beard});
+	CustomizationConfigs.Add(ECustomizationElement::HD_Body, FCustomizationConfig{ECustomizationElement::HD_Body});
+	CustomizationConfigs.Add(ECustomizationElement::HD_Hair, FCustomizationConfig{ECustomizationElement::HD_Hair});
+	CustomizationConfigs.Add(ECustomizationElement::HD_Hands, FCustomizationConfig{ECustomizationElement::HD_Hands});
+	CustomizationConfigs.Add(ECustomizationElement::HD_Head, FCustomizationConfig{ECustomizationElement::HD_Head});
+	CustomizationConfigs.Add(ECustomizationElement::HD_Legs, FCustomizationConfig{ECustomizationElement::HD_Legs});
 
 	UpdateCharacter();
 
@@ -53,12 +48,17 @@ void UHDCreateCharacterView::NativeOnInitialized()
 	if (Create) Create->OnClicked.AddDynamic(this, &UHDCreateCharacterView::OnClick_Create);
 }
 
+void UHDCreateCharacterView::Revert()
+{
+	Create->SetIsEnabled(true);
+}
+
 void UHDCreateCharacterView::OnClick_Legs_1()
 {
 	Legs_2->SetIsEnabled(true);
 	Legs_1->SetIsEnabled(false);
 
-	CustomizationConfigs[ECustomizationElement::Legs].ActiveElement = 0;
+	CustomizationConfigs[ECustomizationElement::HD_Legs].ActiveElement = 0;
 
 	UpdateCharacter();
 }
@@ -68,7 +68,7 @@ void UHDCreateCharacterView::OnClick_Legs_2()
 	Legs_2->SetIsEnabled(false);
 	Legs_1->SetIsEnabled(true);
 
-	CustomizationConfigs[ECustomizationElement::Legs].ActiveElement = 1;
+	CustomizationConfigs[ECustomizationElement::HD_Legs].ActiveElement = 1;
 
 	UpdateCharacter();
 }
@@ -79,7 +79,7 @@ void UHDCreateCharacterView::OnClick_Body_1()
 	Body_2->SetIsEnabled(true);
 	Body_3->SetIsEnabled(true);
 
-	CustomizationConfigs[ECustomizationElement::Body].ActiveElement = 0;
+	CustomizationConfigs[ECustomizationElement::HD_Body].ActiveElement = 0;
 
 	UpdateCharacter();
 }
@@ -90,7 +90,7 @@ void UHDCreateCharacterView::OnClick_Body_2()
 	Body_2->SetIsEnabled(false);
 	Body_3->SetIsEnabled(true);
 
-	CustomizationConfigs[ECustomizationElement::Body].ActiveElement = 1;
+	CustomizationConfigs[ECustomizationElement::HD_Body].ActiveElement = 1;
 
 	UpdateCharacter();
 }
@@ -101,7 +101,7 @@ void UHDCreateCharacterView::OnClick_Body_3()
 	Body_2->SetIsEnabled(true);
 	Body_3->SetIsEnabled(false);
 
-	CustomizationConfigs[ECustomizationElement::Body].ActiveElement = 2;
+	CustomizationConfigs[ECustomizationElement::HD_Body].ActiveElement = 2;
 
 	UpdateCharacter();
 }
@@ -111,7 +111,7 @@ void UHDCreateCharacterView::OnClick_Beard_1()
 	Beard_1->SetIsEnabled(false);
 	Beard_2->SetIsEnabled(true);
 
-	CustomizationConfigs[ECustomizationElement::Beard].ActiveElement = 0;
+	CustomizationConfigs[ECustomizationElement::HD_Beard].ActiveElement = 0;
 
 	UpdateCharacter();
 }
@@ -121,7 +121,7 @@ void UHDCreateCharacterView::OnClick_Beard_2()
 	Beard_1->SetIsEnabled(true);
 	Beard_2->SetIsEnabled(false);
 
-	CustomizationConfigs[ECustomizationElement::Beard].ActiveElement = 1;
+	CustomizationConfigs[ECustomizationElement::HD_Beard].ActiveElement = 1;
 
 	UpdateCharacter();
 }
@@ -132,7 +132,7 @@ void UHDCreateCharacterView::OnClick_Hair_1()
 	Hair_2->SetIsEnabled(true);
 	Hair_3->SetIsEnabled(true);
 
-	CustomizationConfigs[ECustomizationElement::Hair].ActiveElement = 0;
+	CustomizationConfigs[ECustomizationElement::HD_Hair].ActiveElement = 0;
 
 	UpdateCharacter();
 }
@@ -143,7 +143,7 @@ void UHDCreateCharacterView::OnClick_Hair_2()
 	Hair_2->SetIsEnabled(false);
 	Hair_3->SetIsEnabled(true);
 
-	CustomizationConfigs[ECustomizationElement::Hair].ActiveElement = 1;
+	CustomizationConfigs[ECustomizationElement::HD_Hair].ActiveElement = 1;
 
 	UpdateCharacter();
 }
@@ -154,19 +154,24 @@ void UHDCreateCharacterView::OnClick_Hair_3()
 	Hair_2->SetIsEnabled(true);
 	Hair_3->SetIsEnabled(false);
 
-	CustomizationConfigs[ECustomizationElement::Hair].ActiveElement = 2;
+	CustomizationConfigs[ECustomizationElement::HD_Hair].ActiveElement = 2;
 
 	UpdateCharacter();
 }
 
 void UHDCreateCharacterView::OnClick_Create()
 {
+	//TODO: disable all buttons
 	Create->SetIsEnabled(false);
-	//Check valid username
-	//Handle result
-	//If true -> game
-	//Else Create->SetIsEnabled(true);
-	UGameplayStatics::OpenLevel(this, "GameplayMap");
+	
+	const auto GameMode = Cast<AHDMainMenuGameMode>(UGameplayStatics::GetGameMode(this));
+	if (!GameMode)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Game mode not found!"))
+		return;
+	}
+	
+	GameMode->CreateNewCharacter(CharName->GetText().ToString());
 }
 
 void UHDCreateCharacterView::UpdateCharacter()
@@ -176,6 +181,13 @@ void UHDCreateCharacterView::UpdateCharacter()
 	{
 		Configs.Add(Config.Value);
 	}
+
+	const auto GameMode = Cast<AHDMainMenuGameMode>(UGameplayStatics::GetGameMode(this));
+	if (!GameMode)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Game mode not found!"))
+		return;
+	}
 	
-	CustomizationComponent->RefreshMeshes(Configs);
+	GameMode->UpdateCustomizationCharacterMesh(Configs);
 }

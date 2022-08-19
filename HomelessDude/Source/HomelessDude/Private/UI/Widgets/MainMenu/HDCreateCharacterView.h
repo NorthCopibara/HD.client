@@ -64,14 +64,13 @@ protected:
 private:
 	TMap<ECustomizationElement, FCustomizationConfig> CustomizationConfigs;
 
-	UPROPERTY()
-	UHDCustomizationComponent* CustomizationComponent = nullptr;
-
 public:
 	UHDCreateCharacterView();
 	
 protected:
 	virtual void NativeOnInitialized() override;
+
+	virtual void Revert() override;
 
 private:
 	UFUNCTION()

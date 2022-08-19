@@ -13,7 +13,7 @@ public:
 
 		for (const auto MeshConfig : Character.MeshConfigs)
 		{
-			CharacterMeshConfigsDTO.Add(CharacterMeshConfigMapper::MapToCharacterMeshConfigDto(MeshConfig));
+			CharacterMeshConfigsDTO.Add(CharacterMeshConfigMapper::MapToCharacterMeshConfigDTO(MeshConfig));
 		}
 		
 		return FCharacterDTO(Character.Name,

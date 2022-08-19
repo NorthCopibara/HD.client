@@ -12,6 +12,16 @@ class AHDMainMenuGameMode : public AGameMode
 {
 	GENERATED_BODY()
 
+protected:
+	//TODO: move to back
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Character")
+	FCharacterModel DefaultCharacterConfig;
+	
+private:
+	TArray<FCharacterModel> PlayerCharacters;
+
+	int32 SelectedPlayerCharacterId = 0;
+	
 public:
 	AHDMainMenuGameMode();
 
@@ -22,11 +32,12 @@ public:
 
 	FString GetSelectedCharacterName();
 	int32 GetCountCharacters() const;
+
+	void UpdateCustomizationCharacterMesh(TArray<FCustomizationConfig> MeshConfigs);
+	
+	void TransitToCreatingCharacterView();
+	void CreateNewCharacter(FString CharacterName);
 	
 private:
-	TArray<FCharacterModel> PlayerCharacters;
-
-	int32 SelectedPlayerCharacterId = 0;
-
 	UHDCustomizationComponent* GetCustomizationComponent();
 };

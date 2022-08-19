@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
+#include "Network/Models/CharacterModel.h"
 #include "Network/Models/Player.h"
 #include "HDGameInstance.generated.h"
 
@@ -19,9 +20,16 @@ public:
 
 	FString GetAuthToken();
 	Player* GetPlayer();
+
+	void SetCharacterModel(FCharacterModel CharacterModel) {  PlayerCharacterModel = CharacterModel; }
+	FCharacterModel GetPlayerCharacterModel() const { return PlayerCharacterModel; } 
+	
 private:
 	TSharedPtr<Player> AuthPlayer = nullptr;
 
 	//TODO
 	TFunction<void(bool bWasSuccessful)> InternalResult = nullptr;
+
+	//TODO: default initialize
+	FCharacterModel PlayerCharacterModel{};
 };

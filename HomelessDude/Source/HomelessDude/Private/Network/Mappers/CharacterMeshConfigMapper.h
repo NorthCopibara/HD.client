@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include "BaseTypes/CustomizationElements.h"
 #include "Game/View/Characters/Components/HDCustomizationComponent.h"
 #include "Network/dto/CharacterDTO.h"
 #include "Utils/Utils.h"
@@ -7,10 +8,14 @@
 class CharacterMeshConfigMapper
 {
 public:
-	static FCharacterMeshConfigDTO MapToCharacterMeshConfigDto(FCustomizationConfig CharacterMeshConfig)
+	static FCharacterMeshConfigDTO MapToCharacterMeshConfigDTO(FCustomizationConfig CharacterMeshConfig)
 	{
-		const auto CustomizationElement = ENUM_VALUE_TO_STRING(ECustomizationElement,
-		                                                       CharacterMeshConfig.CustomizationElement);
+		const UEnum* Enum = StaticEnum<ECustomizationElement>();
+		//TODO: move to mapper
+		const auto EnumIndex = static_cast<int64>(CharacterMeshConfig.CustomizationElement);
+		const auto Index = Enum->GetIndexByValue(EnumIndex);
+		const auto CustomizationElement = Enum->GetNameStringByIndex(Index);
+
 		return FCharacterMeshConfigDTO(CustomizationElement,
 		                               CharacterMeshConfig.ActiveElement);
 	}

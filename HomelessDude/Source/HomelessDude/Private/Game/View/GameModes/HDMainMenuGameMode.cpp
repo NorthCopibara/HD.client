@@ -10,6 +10,7 @@
 #include "Network/dto/CharacterDTO.h"
 #include "Network/dto/SelectionMenuDTO.h"
 #include "Network/Mappers/CharacterMapper.h"
+#include "Network/Requests/CreateCharacterRequest.h"
 #include "Network/Requests/GetSelectionCharacterRequest.h"
 #include "UI/HDMainMenuHUD.h"
 
@@ -44,7 +45,6 @@ void AHDMainMenuGameMode::LoadPlayerCharacters()
 			UE_LOG(LogTemp, Error, TEXT("Response message: %s"), *Response->GetContentAsString())
 			return;
 		};
-
 
 		FSelectionMenuDTO SelectionMenuDto;
 		const FString JsonString = Response->GetContentAsString();
@@ -81,16 +81,14 @@ void AHDMainMenuGameMode::LoadPlayerCharacters()
 void AHDMainMenuGameMode::NextPlayerCharacter()
 {
 	if (GetCountCharacters() < 2) return;
-	
+
 	int32 NextId = SelectedPlayerCharacterId + 1;
 	if (NextId >= PlayerCharacters.Num())
 	{
 		NextId = 0;
 	}
 
-	const auto CustomizationComponent = GetCustomizationComponent();
-	if (!CustomizationComponent) return;
-	CustomizationComponent->RefreshMeshes(PlayerCharacters[NextId].MeshConfigs);
+	UpdateCustomizationCharacterMesh(PlayerCharacters[NextId].MeshConfigs);
 
 	SelectedPlayerCharacterId = NextId;
 }
@@ -99,17 +97,15 @@ void AHDMainMenuGameMode::PreviousPlayerCharacter()
 {
 	if (GetCountCharacters() < 2) return;
 
-	int32 NextId = SelectedPlayerCharacterId - 1;
-	if (NextId < 0)
+	int32 PreviousId = SelectedPlayerCharacterId - 1;
+	if (PreviousId < 0)
 	{
-		NextId = PlayerCharacters.Num() - 1;
+		PreviousId = PlayerCharacters.Num() - 1;
 	}
 
-	const auto CustomizationComponent = GetCustomizationComponent();
-	if (!CustomizationComponent) return;
-	CustomizationComponent->RefreshMeshes(PlayerCharacters[NextId].MeshConfigs);
+	UpdateCustomizationCharacterMesh(PlayerCharacters[PreviousId].MeshConfigs);
 
-	SelectedPlayerCharacterId = NextId;
+	SelectedPlayerCharacterId = PreviousId;
 }
 
 FString AHDMainMenuGameMode::GetSelectedCharacterName()
@@ -121,6 +117,72 @@ FString AHDMainMenuGameMode::GetSelectedCharacterName()
 int32 AHDMainMenuGameMode::GetCountCharacters() const
 {
 	return PlayerCharacters.Num();
+}
+
+void AHDMainMenuGameMode::UpdateCustomizationCharacterMesh(TArray<FCustomizationConfig> MeshConfigs)
+{
+	const auto CustomizationComponent = GetCustomizationComponent();
+	if (!CustomizationComponent) return;
+	CustomizationComponent->RefreshMeshes(MeshConfigs);
+}
+
+void AHDMainMenuGameMode::TransitToCreatingCharacterView()
+{
+	UpdateCustomizationCharacterMesh(DefaultCharacterConfig.MeshConfigs);
+
+	//TODO: create transitions
+	const auto Hud = Cast<AHDMainMenuHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
+	if (!Hud) return;
+
+	Hud->Hide(EMenuViewName::SelectCharacter);
+	Hud->Show(EMenuViewName::CreateCharacter);
+}
+
+void AHDMainMenuGameMode::CreateNewCharacter(FString CharacterName)
+{
+	const FCharacterModel CharacterModel(CharacterName,
+	                                     GetCustomizationComponent()->GetCurrentMeshConfigs(),
+	                                     true);
+
+	const auto CharacterDTO = CharacterMapper::MapToCharacterDTO(CharacterModel);
+
+	const auto GameInstance = Cast<UHDGameInstance>(UGameplayStatics::GetGameInstance(this));
+	if (!GameInstance)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Game instance not found"))
+		return;
+	}
+
+	CreateCharacterRequest::Send(
+		GameInstance->GetAuthToken(),
+		CharacterDTO,
+		[&](FHttpRequestPtr Request,
+		    FHttpResponsePtr Response,
+		    bool bWasSuccessful)
+		{
+			if (!HttpService::ResponseIsValid(Response, bWasSuccessful))
+			{
+				UE_LOG(LogTemp, Error, TEXT("Get selection character request faild"))
+				UE_LOG(LogTemp, Error, TEXT("Response message: %s"), *Response->GetContentAsString())
+
+				const auto Hud = Cast<AHDMainMenuHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
+				if (!Hud) return;
+
+				Hud->Revert(EMenuViewName::CreateCharacter);
+				return;
+			};
+
+			FCharacterDTO ResultCharacterDTO;
+			const FString JsonString = Response->GetContentAsString();
+			FJsonObjectConverter::JsonObjectStringToUStruct<FCharacterDTO>(JsonString, &ResultCharacterDTO, 0, 0);
+
+			const auto ResultCharacterModel = CharacterMapper::MapToCharacterModel(ResultCharacterDTO);
+
+			const auto InternalGameInstance = Cast<UHDGameInstance>(UGameplayStatics::GetGameInstance(this));
+			InternalGameInstance->SetCharacterModel(ResultCharacterModel);
+
+			UGameplayStatics::OpenLevel(this, "GameplayMap");
+		});
 }
 
 UHDCustomizationComponent* AHDMainMenuGameMode::GetCustomizationComponent()

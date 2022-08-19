@@ -3,19 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "BaseTypes/CustomizationElements.h"
 #include "Components/ActorComponent.h"
 #include "HDCustomizationComponent.generated.h"
-
-UENUM(BlueprintType)
-enum class ECustomizationElement : uint8
-{
-	Hair = 0,
-	Head = 1,
-	Beard = 2,
-	Body = 4,
-	Hands = 8,
-	Legs = 16
-};
 
 USTRUCT(BlueprintType)
 struct FCustomizationConfig
@@ -54,23 +44,19 @@ class HOMELESSDUDE_API UHDCustomizationComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:
-	UHDCustomizationComponent();
-	
-	void Init();
-
-	void RefreshMeshes(TArray<FCustomizationConfig> Configs);
-
 protected:
-	UPROPERTY(EditDefaultsOnly, Category = "Customization")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Customization")
 	TMap<ECustomizationElement, FCustomizationMeshes> CustomizationElements;
 
-	//Test
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
-	TArray<FCustomizationConfig> TestConfig;
+private:
+	TArray<FCustomizationConfig> CurrentConfigs;
 
-	UFUNCTION(BlueprintCallable, Category = "Tests")
-	void TestUpdate() { RefreshMeshes(TestConfig); }
+public:
+	UHDCustomizationComponent();
+
+	void Init();
+	void RefreshMeshes(TArray<FCustomizationConfig> Configs);
+	TArray<FCustomizationConfig> GetCurrentMeshConfigs();
 
 private:
 	void ChangeMeshVisibility(FName MeshName, bool IsVisible);

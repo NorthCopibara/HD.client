@@ -4,6 +4,7 @@
 #include "HDSelectCharacterView.h"
 
 #include "Kismet/GameplayStatics.h"
+#include "UI/HDMainMenuHUD.h"
 
 UHDSelectCharacterView::UHDSelectCharacterView()
 {
@@ -49,8 +50,7 @@ void UHDSelectCharacterView::OnClick_Select()
 
 void UHDSelectCharacterView::OnClick_CreateChar()
 {
-	//Move to create view
-	//Show pawn
+	GameMode->TransitToCreatingCharacterView();
 }
 
 void UHDSelectCharacterView::OnClick_NextChar()
