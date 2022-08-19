@@ -36,8 +36,12 @@ public:
 	void UpdateCustomizationCharacterMesh(TArray<FCustomizationConfig> MeshConfigs);
 	
 	void TransitToCreatingCharacterView();
+	
 	void CreateNewCharacter(FString CharacterName);
+	void SelectCharacter();
 	
 private:
 	UHDCustomizationComponent* GetCustomizationComponent();
+
+	void InitCharacterFromResponse(FString Response);
 };

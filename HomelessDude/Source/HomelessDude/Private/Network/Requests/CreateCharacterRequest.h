@@ -21,10 +21,7 @@ public:
 		                                                ContentJsonString,
 		                                                0,
 		                                                0);
-
-		UE_LOG(LogTemp, Warning, TEXT("Test_json: %s"), *ContentJsonString)
-		UE_LOG(LogTemp, Warning, TEXT("Test_token: %s"), *Token)
-
+		
 		HttpService::PostRequest("/menu/create", ContentJsonString, Token, Response);
 	}
 };

@@ -12,6 +12,7 @@
 #include "Network/Mappers/CharacterMapper.h"
 #include "Network/Requests/CreateCharacterRequest.h"
 #include "Network/Requests/GetSelectionCharacterRequest.h"
+#include "Network/Requests/SelectCharacterRequest.h"
 #include "UI/HDMainMenuHUD.h"
 
 AHDMainMenuGameMode::AHDMainMenuGameMode()
@@ -172,16 +173,39 @@ void AHDMainMenuGameMode::CreateNewCharacter(FString CharacterName)
 				return;
 			};
 
-			FCharacterDTO ResultCharacterDTO;
-			const FString JsonString = Response->GetContentAsString();
-			FJsonObjectConverter::JsonObjectStringToUStruct<FCharacterDTO>(JsonString, &ResultCharacterDTO, 0, 0);
+			InitCharacterFromResponse(Response->GetContentAsString());
+		});
+}
 
-			const auto ResultCharacterModel = CharacterMapper::MapToCharacterModel(ResultCharacterDTO);
+void AHDMainMenuGameMode::SelectCharacter()
+{
+	const auto GameInstance = Cast<UHDGameInstance>(UGameplayStatics::GetGameInstance(this));
+	if (!GameInstance)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Game instance not found"))
+		return;
+	}
 
-			const auto InternalGameInstance = Cast<UHDGameInstance>(UGameplayStatics::GetGameInstance(this));
-			InternalGameInstance->SetCharacterModel(ResultCharacterModel);
+	SelectCharacterRequest::Send(
+		GameInstance->GetAuthToken(),
+		SelectedPlayerCharacterId,
+		[&](FHttpRequestPtr Request,
+		    FHttpResponsePtr Response,
+		    bool bWasSuccessful)
+		{
+			if (!HttpService::ResponseIsValid(Response, bWasSuccessful))
+			{
+				UE_LOG(LogTemp, Error, TEXT("Get selection character request faild"))
+				UE_LOG(LogTemp, Error, TEXT("Response message: %s"), *Response->GetContentAsString())
 
-			UGameplayStatics::OpenLevel(this, "GameplayMap");
+				const auto Hud = Cast<AHDMainMenuHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
+				if (!Hud) return;
+
+				Hud->Revert(EMenuViewName::CreateCharacter);
+				return;
+			};
+
+			InitCharacterFromResponse(Response->GetContentAsString());
 		});
 }
 
@@ -204,4 +228,19 @@ UHDCustomizationComponent* AHDMainMenuGameMode::GetCustomizationComponent()
 	}
 
 	return CustomizationComponent;
+}
+
+void AHDMainMenuGameMode::InitCharacterFromResponse(FString ResponseString)
+{
+	FCharacterDTO ResultCharacterDTO;
+
+	FJsonObjectConverter::JsonObjectStringToUStruct<FCharacterDTO>(ResponseString, &ResultCharacterDTO, 0, 0);
+
+	const auto ResultCharacterModel = CharacterMapper::MapToCharacterModel(ResultCharacterDTO);
+
+	const auto InternalGameInstance = Cast<UHDGameInstance>(UGameplayStatics::GetGameInstance(this));
+	InternalGameInstance->SetCharacterModel(ResultCharacterModel);
+
+	UGameplayStatics::OpenLevel(this, "GameplayMap");
+	UGameplayStatics::GetPlayerController(this,0)->SetInputMode(FInputModeGameOnly());
 }

@@ -13,7 +13,8 @@ public:
 		                 FHttpResponsePtr Response,
 		                 bool bWasSuccessful)> Response)
 	{
-		const auto RequestAddress = "/menu/selection/" + TargetCharacterId;
+		const FString RequestAddress = FString::Printf(TEXT("/menu/selection/%i"), TargetCharacterId);
+		UE_LOG(LogTemp, Warning, TEXT("Test_url: %s"), *RequestAddress)
 		HttpService::GetRequest(RequestAddress, Token, Response);
 	}
 };

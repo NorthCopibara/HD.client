@@ -27,8 +27,9 @@ void UHDSelectCharacterView::NativeOnInitialized()
 void UHDSelectCharacterView::Revert()
 {
 	SetCharacterName();
-	
-	const bool HasCharactersMore2 = GameMode->GetCountCharacters() > 1;
+
+	const auto CountCharacters =  GameMode->GetCountCharacters();
+	const bool HasCharactersMore2 = CountCharacters > 1;
 	const auto IsVisible = HasCharactersMore2 ? ESlateVisibility::Visible : ESlateVisibility::Hidden;
 	
 	NextChar->SetVisibility(IsVisible);
@@ -37,15 +38,14 @@ void UHDSelectCharacterView::Revert()
 	PreviousChar->SetVisibility(IsVisible);
 	PreviousChar->SetIsEnabled(HasCharactersMore2);
 
-	Select->SetVisibility(IsVisible);
-	Select->SetIsEnabled(HasCharactersMore2);
+	const auto HasCharacters = CountCharacters != 0;
+	Select->SetVisibility(HasCharacters ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+	Select->SetIsEnabled(HasCharacters);
 }
 
 void UHDSelectCharacterView::OnClick_Select()
 {
-	//Select char -> session
-	//Move to gameplay
-	UGameplayStatics::OpenLevel(this, "GameplayMap");
+	GameMode->SelectCharacter();
 }
 
 void UHDSelectCharacterView::OnClick_CreateChar()
