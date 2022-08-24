@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "Interfaces/IHttpRequest.h"
-#include "Network/Core/HttpService.h"
+#include "Network/Core/HttpClient.h"
 
 class GetSelectionCharacterRequest
 {
@@ -12,6 +12,6 @@ public:
 		                 FHttpResponsePtr Response,
 		                 bool bWasSuccessful)> Response)
 	{
-		HttpService::GetRequest("/menu/selection", Token, Response);
+		HttpClient::GetRequest("/menu/selection", Token, Response);
 	}
 };

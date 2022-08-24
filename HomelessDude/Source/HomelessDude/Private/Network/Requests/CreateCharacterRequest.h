@@ -2,7 +2,7 @@
 
 #include "JsonObjectConverter.h"
 #include "Interfaces/IHttpRequest.h"
-#include "Network/Core/HttpService.h"
+#include "Network/Core/HttpClient.h"
 #include "Network/dto/CharacterDTO.h"
 
 class CreateCharacterRequest
@@ -22,6 +22,6 @@ public:
 		                                                0,
 		                                                0);
 		
-		HttpService::PostRequest("/menu/create", ContentJsonString, Token, Response);
+		HttpClient::PostRequest("/menu/create", ContentJsonString, Token, Response);
 	}
 };

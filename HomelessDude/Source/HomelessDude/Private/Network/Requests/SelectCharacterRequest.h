@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "Interfaces/IHttpRequest.h"
-#include "Network/Core/HttpService.h"
+#include "Network/Core/HttpClient.h"
 
 class SelectCharacterRequest
 {
@@ -14,7 +14,6 @@ public:
 		                 bool bWasSuccessful)> Response)
 	{
 		const FString RequestAddress = FString::Printf(TEXT("/menu/selection/%i"), TargetCharacterId);
-		UE_LOG(LogTemp, Warning, TEXT("Test_url: %s"), *RequestAddress)
-		HttpService::GetRequest(RequestAddress, Token, Response);
+		HttpClient::GetRequest(RequestAddress, Token, Response);
 	}
 };

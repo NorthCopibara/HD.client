@@ -9,6 +9,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Network/dto/CharacterDTO.h"
 #include "Network/dto/SelectionMenuDTO.h"
+#include "Network/Extensions/NetworkExtensions.h"
 #include "Network/Mappers/CharacterMapper.h"
 #include "Network/Requests/CreateCharacterRequest.h"
 #include "Network/Requests/GetSelectionCharacterRequest.h"
@@ -40,7 +41,7 @@ void AHDMainMenuGameMode::LoadPlayerCharacters()
 	                                                                     FHttpResponsePtr Response,
 	                                                                     bool bWasSuccessful)
 	{
-		if (!HttpService::ResponseIsValid(Response, bWasSuccessful))
+		if (!NetworkExtensions::ResponseIsValid(Response, bWasSuccessful))
 		{
 			UE_LOG(LogTemp, Error, TEXT("Get selection character request faild"))
 			UE_LOG(LogTemp, Error, TEXT("Response message: %s"), *Response->GetContentAsString())
@@ -161,7 +162,7 @@ void AHDMainMenuGameMode::CreateNewCharacter(FString CharacterName)
 		    FHttpResponsePtr Response,
 		    bool bWasSuccessful)
 		{
-			if (!HttpService::ResponseIsValid(Response, bWasSuccessful))
+			if (!NetworkExtensions::ResponseIsValid(Response, bWasSuccessful))
 			{
 				UE_LOG(LogTemp, Error, TEXT("Get selection character request faild"))
 				UE_LOG(LogTemp, Error, TEXT("Response message: %s"), *Response->GetContentAsString())
@@ -193,7 +194,7 @@ void AHDMainMenuGameMode::SelectCharacter()
 		    FHttpResponsePtr Response,
 		    bool bWasSuccessful)
 		{
-			if (!HttpService::ResponseIsValid(Response, bWasSuccessful))
+			if (!NetworkExtensions::ResponseIsValid(Response, bWasSuccessful))
 			{
 				UE_LOG(LogTemp, Error, TEXT("Get selection character request faild"))
 				UE_LOG(LogTemp, Error, TEXT("Response message: %s"), *Response->GetContentAsString())

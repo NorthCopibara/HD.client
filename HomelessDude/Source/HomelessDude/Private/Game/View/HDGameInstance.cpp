@@ -4,6 +4,7 @@
 #include "HDGameInstance.h"
 
 #include "Network/dto/TokenDTO.h"
+#include "Network/Extensions/NetworkExtensions.h"
 #include "Network/Requests/LoginRequest.h"
 #include "Network/Requests/RegistrationRequest.h"
 
@@ -16,19 +17,17 @@ void UHDGameInstance::Login(FString Username, FString Password, const TFunction<
 		return;
 	}
 
-	InternalResult = Result;
-
 	const FUserDTO User(Username, Password);
 	LoginRequest::Send(
 		User,
-		[&](FHttpRequestPtr Request,
+		[&, Result](FHttpRequestPtr Request,
 		    FHttpResponsePtr Response,
 		    bool bWasSuccessful)
 		{
-			if (!HttpService::ResponseIsValid(Response, bWasSuccessful))
+			if (!NetworkExtensions::ResponseIsValid(Response, bWasSuccessful))
 			{
-				UE_LOG(LogTemp, Error, TEXT("TODO: handle exception!!!"))
-				if (InternalResult) InternalResult(false);
+				//TODO: handle ecxeption
+				if (Result) Result(false);
 				return;
 			};
 
@@ -44,7 +43,7 @@ void UHDGameInstance::Login(FString Username, FString Password, const TFunction<
 			UE_LOG(LogTemp, Warning, TEXT("Test: access tocken = %s"), *TokenDTO.accessToken)
 			
 			//TODO: handle exception
-			if (InternalResult) InternalResult(!TokenDTO.accessToken.IsEmpty());
+			if (Result) Result(!TokenDTO.accessToken.IsEmpty());
 		});
 }
 
@@ -64,20 +63,17 @@ void UHDGameInstance::Registration(FString Username,
 		return;
 	}
 
-	InternalResult = Result;
-
 	const FUserDTO User(Username, Password);
-
 	RegistrationRequest::Send(
 		User,
-		[&](FHttpRequestPtr Request,
+		[&, Result](FHttpRequestPtr Request,
 		    FHttpResponsePtr Response,
 		    bool bWasSuccessful)
 		{
-			if (!HttpService::ResponseIsValid(Response, bWasSuccessful))
+			if (!NetworkExtensions::ResponseIsValid(Response, bWasSuccessful))
 			{
 				UE_LOG(LogTemp, Error, TEXT("TODO: handle exception!!!"))
-				if (InternalResult) InternalResult(false);
+				if (Result) Result(false);
 				return;
 			};
 
@@ -89,7 +85,7 @@ void UHDGameInstance::Registration(FString Username,
 
 			GetPlayer()->SetAuthToken(TokenDTO.accessToken);
 
-			if (InternalResult) InternalResult(!JsonString.IsEmpty());
+			if (Result) Result(!JsonString.IsEmpty());
 
 			UE_LOG(LogTemp, Warning, TEXT("Test: response = %s"), *JsonString)
 			UE_LOG(LogTemp, Warning, TEXT("Test: access tocken = %s"), *TokenDTO.accessToken)

@@ -2,7 +2,7 @@
 
 #include "JsonObjectConverter.h"
 #include "Interfaces/IHttpRequest.h"
-#include "Network/Core/HttpService.h"
+#include "Network/Core/HttpClient.h"
 #include "Network/dto/UserDTO.h"
 
 class LoginRequest
@@ -21,6 +21,6 @@ public:
 		                                                0,
 		                                                0);
 
-		HttpService::PostRequest("/auth/login", ContentJsonString, "", Response);
+		HttpClient::PostRequest("/auth/login", ContentJsonString, "", Response);
 	}
 };

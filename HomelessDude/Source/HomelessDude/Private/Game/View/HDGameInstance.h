@@ -27,9 +27,6 @@ public:
 private:
 	TSharedPtr<Player> AuthPlayer = nullptr;
 
-	//TODO
-	TFunction<void(bool bWasSuccessful)> InternalResult = nullptr;
-
 	//TODO: default initialize
 	FCharacterModel PlayerCharacterModel{};
 };
